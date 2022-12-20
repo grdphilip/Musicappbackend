@@ -39,9 +39,13 @@ router.get("/:id", getRoom, (req, res) => {
 
 //Creating One
 router.post("/", async (req, res) => {
+
   const room = new Room({
     host: req.body.host,
+    key: req.body.key,
+    genre: req.body.genre,
   });
+ 
   try {
     const newRoom = await room.save();
     res.status(201).json(newRoom);

@@ -11,8 +11,10 @@ POST http://localhost:3000/rooms
 Content-Type: application/json
 
 {
-    "host": "Philip"
-
+    "host": "Philip",
+    "key": "Roomkey",
+    "genre": "classics"
+    
 }
 
 ###
