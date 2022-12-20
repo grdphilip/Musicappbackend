@@ -13,8 +13,8 @@ db.once('open', () => console.log('Connected to Database'))
 //Allows us to use any middleware we want
 app.use(express.json())
 
-const subscribersRouter = require('./routes/subscribers')
-app.use('/subscribers', subscribersRouter)
+const roomsRouter = require('./routes/rooms')
+app.use('/rooms', roomsRouter)
 
 
 app.listen(3000, () => console.log('Server has started'))

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Subscriber = require("../models/subscriber.js");
+const Room = require("../models/room.js");
 
 module.exports = router;
 
@@ -25,32 +25,32 @@ Controller - JS, Model - SQL, View - HTML
 //Getting all subscribers
 router.get("/", async (req, res) => {
   try {
-    const subscribers = await Subscriber.find();
-    res.json(subscribers);
+    const rooms = await Room.find();
+    res.json(rooms);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 //Getting One
 
-router.get("/:id", getSubscriber, (req, res) => {
-  res.json(res.subscriber);
+router.get("/:id", getRoom, (req, res) => {
+  res.json(res.room);
 });
 
 //Creating One
 router.post("/", async (req, res) => {
-  const subscriber = new Subscriber({
-    name: req.body.name,
-    subscribedToChannel: req.body.subscribedToChannel,
+  const room = new Room({
+    host: req.body.host,
   });
   try {
-    const newSubscriber = await subscriber.save();
-    res.status(201).json(newSubscriber);
+    const newRoom = await room.save();
+    res.status(201).json(newRoom);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 //Updating One
+/*
 router.patch('/:id', getSubscriber, async (req, res) => {
     if (req.body.name != null) {
       res.subscriber.name = req.body.name
@@ -76,18 +76,20 @@ router.delete("/:id", getSubscriber, async (req, res) => {
   }
 });
 
-async function getSubscriber(req, res, next) {
-  let subscriber;
+*/
+
+async function getRoom(req, res, next) {
+  let room;
   try {
-    subscriber = await Subscriber.findById(req.params.id);
-    if (subscriber == null) {
-      return res.status(404).json({ message: "Cannot find subscriber" });
+    room = await Room.findById(req.params.id);
+    if (room == null) {
+      return res.status(404).json({ message: "Cannot find room" });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 
-  res.subscriber = subscriber;
+  res.room = room;
   next();
 }
 

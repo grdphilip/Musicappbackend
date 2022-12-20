@@ -1,0 +1,5 @@
+
+- Create a room with an ID, Participants
+- Play music in the room
+
+- Create a "session" where people can join the room with the rooms ID. 

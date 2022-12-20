@@ -1,18 +1,17 @@
 
-GET http://localhost:3000/subscribers
+GET http://localhost:3000/rooms
 
 ###
 
-GET http://localhost:3000/subscribers/63a1bd3d471b7b00859b36ae
+GET http://localhost:3000/rooms/63a1ec2fa82a85af46918da5
 
 ### 
 
-POST http://localhost:3000/subscribers
+POST http://localhost:3000/rooms
 Content-Type: application/json
 
 {
-    "name": "Person",
-    "subscribedToChannel": "Web dev"
+    "host": "Philip"
 
 }
 
