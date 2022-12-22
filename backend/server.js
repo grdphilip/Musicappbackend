@@ -1,5 +1,8 @@
 require('dotenv').config()
 
+
+//Socket io låter sessionen vara kvar
+
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
