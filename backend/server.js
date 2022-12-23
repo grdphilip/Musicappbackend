@@ -36,17 +36,36 @@ app.use(express.json());
 const roomsRouter = require("./routes/rooms");
 app.use("/rooms", roomsRouter);
 
+
+let usersInRoom = []
+
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
-  socket.on("join_room", (data) => {
+  socket.on("join_room", (data, name) => {
     socket.join(data);
-
+    console.log(`Name of player: ${name}`)
+    console.log(`Room: ${data}`)
+    const userInRoom = {
+      name,
+      id: socket.id,
+      room: data,
+    }
+    usersInRoom.push(userInRoom)
+    console.log(usersInRoom)
+    socket.emit("users_in_room", usersInRoom)
+    socket.to(data).emit(usersInRoom)
   });
 
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
   });
+
+  socket.on("update_users", (data) => {
+    console.log(usersInRoom)
+    socket.emit("users_in_room", usersInRoom)
+  })
+
 });
 
 server.listen(3000, () => {

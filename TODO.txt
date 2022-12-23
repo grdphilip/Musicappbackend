@@ -1,5 +1,18 @@
 
-- Create a room with an ID, Participants
-- Play music in the room
+- Create a room with an ID, Participants Done CHECK
+- Create a "session" where people can join the room with the rooms ID CHECK
+- Create socket infrastructure CHECK
 
-- Create a "session" where people can join the room with the rooms ID. 
+- Create vote to be ready functionality
+-- Prevent people from joining non-existent rooms, has to happen in the frontend
+-- Socket rooms are created on join 
+-- Display everyone in lobby CHECK
+-- Display timer until game starts
+
+-Create a player in mongodb which will store the players result
+
+- Create audio player
+- Create infrastructure for every player
+- Create game logic
+
+
