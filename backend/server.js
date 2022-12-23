@@ -36,7 +36,6 @@ app.use(express.json());
 const roomsRouter = require("./routes/rooms");
 app.use("/rooms", roomsRouter);
 
-
 let usersInRoom = []
 
 io.on("connection", (socket) => {
@@ -62,9 +61,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("update_users", (data) => {
-    console.log(usersInRoom)
     socket.emit("users_in_room", usersInRoom)
   })
+
+  socket.on("start_game", (data) => {
+    adress = "../game"
+    socket.to(data.room).emit("game_started", adress)
+  });
 
 });
 

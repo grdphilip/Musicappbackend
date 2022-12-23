@@ -19,7 +19,7 @@ const roomSchema = new mongoose.Schema({
   createdDate: {
     type: Date,
     required: true,
-    default: Date.now,
+    default: Date.now
   },
 });
 
