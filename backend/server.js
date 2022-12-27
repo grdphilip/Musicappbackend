@@ -36,39 +36,62 @@ app.use(express.json());
 const roomsRouter = require("./routes/rooms");
 app.use("/rooms", roomsRouter);
 
-let usersInRoom = []
+let usersInRoom = [];
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", (data, name) => {
     socket.join(data);
-    console.log(`Name of player: ${name}`)
-    console.log(`Room: ${data}`)
+   
+
+    console.log(`Name of player: ${name}`);
+    console.log(`Room: ${data}`);
     const userInRoom = {
       name,
       id: socket.id,
       room: data,
-    }
-    usersInRoom.push(userInRoom)
-    console.log(usersInRoom)
-    socket.emit("users_in_room", usersInRoom)
-    socket.to(data).emit(usersInRoom)
+    };
+
+    usersInRoom.push(userInRoom);
+
+    const usersInSpecificRoom = usersInRoom.filter(
+      (user) => user.room === data
+    );
+
+    console.log(usersInSpecificRoom)
+
+    io.in(data).emit("users_in_room", usersInSpecificRoom);
+
+  });
+
+  socket.on("update_users", (data) => {
+    // Filter the list of users in the room to only include those in the specified room
+    const usersInSpecificRoom = usersInRoom.filter(
+      (user) => user.room === data.room
+    );
+    socket.emit("users_in_room", usersInSpecificRoom);
+
   });
 
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
   });
 
-  socket.on("update_users", (data) => {
-    socket.emit("users_in_room", usersInRoom)
-  })
-
   socket.on("start_game", (data) => {
-    adress = "../game"
-    socket.to(data.room).emit("game_started", adress)
+    adress = "../game";
+    socket.to(data.room).emit("game_started", adress);
   });
 
+  socket.on("play_audio", (data) => {
+    console.log("Recieved");
+    socket.to(data.room).emit("audio_played", data);
+  });
+
+  socket.on("pause_audio", (data) => {
+    console.log("Recieved");
+    socket.to(data.room).emit("audio_paused", data);
+  });
 });
 
 server.listen(3000, () => {
